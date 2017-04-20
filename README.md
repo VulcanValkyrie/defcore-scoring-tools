@@ -5,7 +5,9 @@
 * 4/17/17
   - Initial commit. make-csv.py is in full working form, push-csv.py is still
     not at full functionality, although it shouldn't require too much work
-
+* 4/19/17
+  - fixed bugs concerning updating the scoring.txt file, as well as an
+    alignment issue that broke score tabulation.
 
 ###################### Current Status & Functionality #######################
 
@@ -16,10 +18,5 @@
     the user's spreadsheet tool of choice for greater ease of scoring.
 
 * push-csv.py
-  - This is not a complete script, though it shouldn't take too long to
-    straighten out
-  - Its functionality will be to take the csv you have modified, convert
-    its format into that found in scoring.txt, and push all updated lines
-    into the file.
-  - I may just have the script run scoring.txt, given that the conversion
-    process renders the original scores incorrect.
+  - Takes the csv you have modified, convert its format into that found in
+    scoring.txt, and push all updated lines into the file.

@@ -36,8 +36,9 @@ with open(filename) as read, open("scoring.txt") as oldfile, open("temp.txt", "w
                     line[7:10]) + "] [" + ",".join(line[10:13]) + "] [" + line[-1].replace("\n", "") + "] [0]*".lstrip()
                 oldcap = oldline.split(":")[0].rstrip().lstrip()
                 if oldcap == capability:
-                    line = capability.rjust(
-                        35, " ") + ":" + line.rstrip().rjust(55, " ") + "\n"
+                    capability = capability + ":"
+                    line = capability.ljust(
+                        35, " ") + line.rstrip().rjust(55, " ") + "\n"
                     outfile.write(line)
                     status = 1
                     break
@@ -51,5 +52,4 @@ with open(filename) as read, open("scoring.txt") as oldfile, open("temp.txt", "w
     read.close()
     oldfile.close()
     outfile.close()
-# now run the score tabulation script automatically
-subprocess.run(['./tabulate_scores.py'])
+subprocess.run(["./tabulate_scores.py"])
