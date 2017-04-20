@@ -3,6 +3,7 @@
 import argparse
 import fileinput
 import os
+import subprocess
 
 # this script takes the scored capabilities from scoring.csv
 # and pushes them back to the original scoring doc. It then
@@ -28,15 +29,13 @@ with open(filename) as read, open("scoring.txt") as oldfile, open("temp.txt", "w
         status = 0
         if "] [" in oldline and ":" in oldline and "-" in oldline:
             for line in read:
-                capability = line.split(":")[0].rstrip()
+                capability = line.split(":")[0].rstrip().lstrip()
                 line = line.split(",")
                 # reformat csv entry
                 line = "[" + ",".join(line[1:4]) + "] [" + ",".join(line[4:7]) + "] [" + ",".join(
                     line[7:10]) + "] [" + ",".join(line[10:13]) + "] [" + line[-1].replace("\n", "") + "] [0]*".lstrip()
-                oldcap = oldline.split(":")[0].rstrip()
-                # oldscore = oldline.split(":")[0].rstrip().split("[", 2)[0]
-                # score = line.split("[", 2)[0]
-                if oldcap == capability and line != oldline:  # and score != oldscore:
+                oldcap = oldline.split(":")[0].rstrip().lstrip()
+                if oldcap == capability:
                     line = capability.rjust(
                         35, " ") + ":" + line.rstrip().rjust(55, " ") + "\n"
                     outfile.write(line)
@@ -44,15 +43,13 @@ with open(filename) as read, open("scoring.txt") as oldfile, open("temp.txt", "w
                     break
             read.seek(0)
         if status == 0:
-            if "] [" in oldline and ":" in oldline and "-" in oldline:
-                oldcap = oldline.split(":")[0].rstrip()
-                oldline = oldline.split(":")[-1].lstrip()
-                oldline = oldcap.rjust(
-                    35, " ") + ":" + oldline.rstrip().rjust(55, " ") + "\n"
+            if not "] [" in oldline and not ":" in oldline:
                 outfile.write(oldline)
             else:
-                outfile.write(oldline)
+                print(oldline + " not found in the updated scoring")
     os.rename("temp.txt", "scoring.txt")
     read.close()
     oldfile.close()
     outfile.close()
+# now run the score tabulation script automatically
+subprocess.run(['./tabulate_scores.py'])
