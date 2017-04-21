@@ -8,6 +8,10 @@
 * 4/19/17
   - fixed bugs concerning updating the scoring.txt file, as well as an
     alignment issue that broke score tabulation.
+* 4/20/17
+   - added functionality which allows you to run the script from the "tools"
+     directory, rather than in the "working_materials" directory, which is,
+     after all, the most appropriate location for a pair of scoring tools.
 
 ###################### Current Status & Functionality #######################
 
